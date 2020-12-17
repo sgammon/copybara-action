@@ -60,8 +60,8 @@ runs:
 
     - run: |
         docker run \
-           -v "~/.ssh":/root/.ssh \
-           -v "~/.config/git":/root/.config/git \
+           -v ~/.ssh:/root/.ssh \
+           -v ~/.config/git:/root/.config/git \
            -v "$(pwd)":/usr/src/app \
            -e COPYBARA_SUBCOMMAND="${{ inputs.command }}" \
            -e COPYBARA_WORKFLOW="${{ inputs.workflow }}" \
