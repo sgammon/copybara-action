@@ -12,9 +12,6 @@ inputs:
   git_credentials:
     description: "secret binding for Git auth"
     required: true
-  git_config:
-    description: "machine user config file for git"
-    required: true
   gpg_key:
     description: "GPG key for signing (private key)"
     required: true
@@ -42,11 +39,10 @@ runs:
   using: "composite"
   steps:
     - run: |
-        mkdir ~/.ssh
+        mkdir -p ~/.ssh ~/.config/git
         echo $'${{ inputs.ssh_key }}' > ~/.ssh/id_rsa
         echo $'${{ inputs.ssh_known_hosts }}' > ~/.ssh/known_hosts
-        echo $'${{ inputs.git_credentials }}' > ~/.git-credentials
-        echo $'${{ inputs.git_config }}' > ~/.gitconfig
+        echo $'${{ inputs.git_credentials }}' > ~/.config/git/credentials
         echo $'${{ inputs.gpg_key }}' > ~/gpg.key
         echo $'${{ inputs.gpg_key_id }}' > ~/gpg.key.id
       shell: bash
@@ -65,8 +61,7 @@ runs:
     - run: |
         docker run \
            -v ~/.ssh:/root/.ssh \
-           -v "~/.git-credentials":/root/.git-credentials \
-           -v "~/.gitconfig":/root/.gitconfig \
+           -v "~/.config":/root/.config/git \
            -v "$(pwd)":/usr/src/app \
            -e COPYBARA_SUBCOMMAND="${{ inputs.command }}" \
            -e COPYBARA_WORKFLOW="${{ inputs.workflow }}" \
