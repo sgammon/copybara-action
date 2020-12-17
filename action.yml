@@ -71,7 +71,7 @@ runs:
            -e COPYBARA_SUBCOMMAND="${{ inputs.command }}" \
            -e COPYBARA_WORKFLOW="${{ inputs.workflow }}" \
            -e COPYBARA_OPTIONS="${{ inputs.options }}" \
-           -it copybara copybara;
+           -it ${{ inputs.image }} copybara;
       shell: bash
 
 branding:
