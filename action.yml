@@ -45,6 +45,7 @@ runs:
         echo $'${{ inputs.git_credentials }}' > ~/.config/git/credentials
         echo $'${{ inputs.gpg_key }}' > ~/gpg.key
         echo $'${{ inputs.gpg_key_id }}' > ~/gpg.key.id
+        echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
       shell: bash
 
     - run: |
