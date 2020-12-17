@@ -57,8 +57,7 @@ runs:
         git config --global user.signingkey ${{ inputs.gpg_key_id }}
         gpg --import ~/gpg.key
         docker run \
-           -v ~/.ssh:/root/.ssh \
-           -v ~/.config/git:/root/.config/git \
+           -v ~:/root \
            -v "$(pwd)":/usr/src/app \
            -e COPYBARA_SUBCOMMAND="${{ inputs.command }}" \
            -e COPYBARA_WORKFLOW="${{ inputs.workflow }}" \
