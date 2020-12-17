@@ -45,7 +45,7 @@ runs:
         echo $'${{ inputs.git_credentials }}' > ~/.config/git/credentials
         echo $'${{ inputs.gpg_key }}' > ~/gpg.key
         echo $'${{ inputs.gpg_key_id }}' > ~/gpg.key.id
-        echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+        echo -e "UserKnownHostsFile=/github/home/.ssh/known_hosts" >> ~/.ssh/config
       shell: bash
 
     - run: |
@@ -61,8 +61,8 @@ runs:
 
     - run: |
         docker run \
-           -v "/root/.ssh":/root/.ssh \
-           -v "/root/.config/git":/root/.config/git \
+           -v "/github/home/.ssh":/root/.ssh \
+           -v "/github/home/.config/git":/root/.config/git \
            -v "$(pwd)":/usr/src/app \
            -e COPYBARA_SUBCOMMAND="${{ inputs.command }}" \
            -e COPYBARA_WORKFLOW="${{ inputs.workflow }}" \
