@@ -47,18 +47,15 @@ runs:
         echo $'${{ inputs.gpg_key_id }}' > ~/gpg.key.id
       shell: bash
 
+    - run: docker pull ${{ inputs.image }}
+      shell: bash
+
     - run: |
         git config --global user.name ${{ inputs.git_name }}
         git config --global user.email ${{ inputs.git_email }}
         git config --global commit.gpgsign true
         git config --global user.signingkey ${{ inputs.gpg_key_id }}
         gpg --import ~/gpg.key
-      shell: bash
-
-    - run: docker pull ${{ inputs.image }}
-      shell: bash
-
-    - run: |
         docker run \
            -v ~/.ssh:/root/.ssh \
            -v ~/.config/git:/root/.config/git \
