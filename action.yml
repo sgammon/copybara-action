@@ -39,12 +39,12 @@ runs:
   using: "composite"
   steps:
     - run: |
-        mkdir -p ~/.ssh ~/.config/git
-        echo $'${{ inputs.ssh_key }}' > ~/.ssh/id_rsa
-        echo $'${{ inputs.ssh_known_hosts }}' > ~/.ssh/known_hosts
-        echo $'${{ inputs.git_credentials }}' > ~/.config/git/credentials
-        echo $'${{ inputs.gpg_key }}' > ~/gpg.key
-        echo $'${{ inputs.gpg_key_id }}' > ~/gpg.key.id
+        mkdir -p /github/home/.ssh /github/home/.config/git
+        echo $'${{ inputs.ssh_key }}' > /github/home/.ssh/id_rsa
+        echo $'${{ inputs.ssh_known_hosts }}' > /github/home/.ssh/known_hosts
+        echo $'${{ inputs.git_credentials }}' > /github/home/.config/git/credentials
+        echo $'${{ inputs.gpg_key }}' > /github/home/gpg.key
+        echo $'${{ inputs.gpg_key_id }}' > /github/home/gpg.key.id
       shell: bash
 
     - run: |
@@ -52,7 +52,7 @@ runs:
         git config --global user.email ${{ inputs.git_email }}
         git config --global commit.gpgsign true
         git config --global user.signingkey ${{ inputs.gpg_key_id }}
-        gpg --import ~/gpg.key
+        gpg --import /github/home/gpg.key
       shell: bash
 
     - run: docker pull ${{ inputs.image }}
