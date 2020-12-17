@@ -27,6 +27,7 @@ runs:
         mkdir ~/.ssh
         echo $'${{ inputs.ssh_key }}' > ~/.ssh/id_rsa
         echo $'${{ inputs.ssh_known_hosts }}' > ~/.ssh/known_hosts
+        echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
       shell: bash
 
     - run: |
