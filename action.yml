@@ -63,6 +63,15 @@ runs:
            -e COPYBARA_WORKFLOW="${{ inputs.workflow }}" \
            -e COPYBARA_OPTIONS="${{ inputs.options }}" \
            -i ${{ inputs.image }} copybara;
+        retVal=$?
+        if [ $retVal -ne 0 ]; then
+            if [ $retVal -eq 4]; then
+              echo "No change required."
+              exit 0
+            fi
+            echo "Error"
+        fi
+        exit $retVal
       shell: bash
 
 branding:
