@@ -30,6 +30,8 @@ inputs:
   command:
     description: "command to run"
     required: true
+  ref:
+    description: "explicit ref to pass to copybara, if desired"
   options:
     description: "flags to pass to Copybara"
   image:
@@ -63,6 +65,7 @@ runs:
            -e COPYBARA_SUBCOMMAND="${{ inputs.command }}" \
            -e COPYBARA_WORKFLOW="${{ inputs.workflow }}" \
            -e COPYBARA_OPTIONS="${{ inputs.options }}" \
+           -e COPYBARA_SOURCEREF="${{ inputs.ref }}" \
            -i ${{ inputs.image }} copybara;
         set -e
         retVal=$?
